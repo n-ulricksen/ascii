@@ -1,4 +1,4 @@
-## Ascii
+## ascii
 
 ![demo](media/ascii.png)
 
