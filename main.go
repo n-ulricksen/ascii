@@ -7,7 +7,14 @@ import (
 	"log"
 )
 
+// Command line flag
 var columns int
+
+var first32Chars = []string{
+	"NUL", "SOH", "STX", "ETX", "EOT", "ENQ", "ACK", "BEL", "BS", "TAB", "LF", "VT", "FF", "CR", "SO", "SI", "DLE", "DC1", "DC2", "DC3", "DC4", "NAK", "SYN", "ETB", "CAN", "EM", "SUB", "ESC", "FS", "GS", "RS", "US", "Space",
+}
+
+var char127 = "DEL"
 
 var (
 	columnHeader    = "Dec\tHex\tOct\tChar\t"
@@ -40,10 +47,12 @@ func main() {
 			}
 
 			buf.WriteString(fmt.Sprintf("%d\t%#x\t%#o\t", n, n, n))
-			if n > 32 {
+			if n == 127 {
+				buf.WriteString(char127 + "\t")
+			} else if n > 32 {
 				buf.WriteString(fmt.Sprintf("%s%c%s\t", colorCyan, n, colorReset))
 			} else {
-				buf.WriteByte('\t')
+				buf.WriteString(fmt.Sprintf("%s\t", first32Chars[n]))
 			}
 
 			if col != columns-1 {
